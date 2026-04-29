@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { History, FileVideo, FileImage, ShieldCheck, ShieldAlert, Clock, ChevronRight, Search, Filter } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { apiService, AnalysisResult } from '../services/apiService';
+import { apiService, AnalysisResult, normalizeAnalysisResult } from '../services/apiService';
 import { GlassEffect, GlassButton } from './ui/liquid-glass';
 import { cn } from '../lib/utils';
 
@@ -82,8 +82,9 @@ export default function HistoryPage() {
     return matchesSearch && matchesFilter;
   });
 
-  const handleViewResult = (result: HistoryItem) => {
-    setResult(result as any);
+  const handleViewResult = (item: HistoryItem) => {
+    const normalizedData = normalizeAnalysisResult(item.raw);
+    setResult(normalizedData as any);
     setCurrentPage('home');
   };
 

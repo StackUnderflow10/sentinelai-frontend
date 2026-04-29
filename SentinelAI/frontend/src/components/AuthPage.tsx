@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from 'react';
+import { buildApiUrl } from "../api-base";
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Lock, ArrowRight, Eye, EyeOff, LogIn, UserPlus } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { buildApiUrl } from '../lib/api-base';
 import { GlassEffect, GlassButton } from './ui/liquid-glass';
 
 export default function AuthPage() {

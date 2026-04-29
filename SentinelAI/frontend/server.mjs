@@ -36,9 +36,10 @@ async function startServer() {
         }
       }
 
-      headers.set("ngrok-skip-browser-warning", "true");
+      if (BACKEND_URL.includes("ngrok")) {
+        headers.set("ngrok-skip-browser-warning", "true");
+      }
       headers.set("Accept", "application/json");
-      headers.set("Host", targetUrl.host);
 
       const requestInit = {
         method: req.method,
@@ -46,8 +47,11 @@ async function startServer() {
       };
 
       if (req.method !== "GET" && req.method !== "HEAD") {
-        requestInit.body = req;
-        requestInit.duplex = "half";
+        requestInit.body = await new Promise((resolve) => {
+          const chunks = [];
+          req.on("data", (chunk) => chunks.push(chunk));
+          req.on("end", () => resolve(Buffer.concat(chunks)));
+        });
       }
 
       const upstream = await fetch(targetUrl, requestInit);

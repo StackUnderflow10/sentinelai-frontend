@@ -57,7 +57,7 @@ function inferMediaTypeFromUrl(url: string): 'image' | 'video' {
   return 'video';
 }
 
-function normalizeAnalysisResult(raw: any): AnalysisResult {
+export function normalizeAnalysisResult(raw: any): AnalysisResult {
   // Backend may return either a flat legacy schema or a nested schema under `visual_analysis`.
   const visual = raw?.visual_analysis ?? raw?.visualAnalysis ?? raw;
   const metadata = raw?.metadata_analysis ?? raw?.metadataAnalysis ?? undefined;
