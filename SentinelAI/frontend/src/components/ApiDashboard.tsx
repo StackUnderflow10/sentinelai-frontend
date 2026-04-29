@@ -91,7 +91,13 @@ export default function ApiDashboard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Failed to generate key');
 
-      const nextApiKey = typeof data.api_key === 'string' ? data.api_key : null;
+     const nextApiKey = 
+        typeof data.api_key === 'string' 
+          ? data.api_key 
+          : typeof data.api_key?.key === 'string' 
+            ? data.api_key.key 
+            : null;
+
       if (!nextApiKey) {
         throw new Error('Backend did not return the regenerated API key.');
       }

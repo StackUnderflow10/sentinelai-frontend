@@ -47,8 +47,8 @@ export default function LandingPage() {
     }
   };
 
-  const handleUrlSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleUrlSubmit = async (e?: FormEvent) => {
+    if (e) e.preventDefault();
     if (!url) return;
     try {
       setLoading(true, 'Fetching URL...');
@@ -348,7 +348,7 @@ export default function LandingPage() {
                       </div>
 
                       <GlassButton
-                        onClick={() => handleUrlSubmit({ preventDefault: () => {} } as any)}
+                        onClick={() => handleUrlSubmit()}
                         className={cn(
                           'w-full bg-emerald-500 hover:bg-emerald-400 py-3.5',
                           (!url || isLoading) && 'opacity-50 pointer-events-none'
